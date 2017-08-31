@@ -14,7 +14,7 @@ def _transcribe_kaldi(audio_path):
 
     # run transcription command
     tscript_cmd = ["transcribe_kaldi.sh", audio_path]
-    subprocess.call(tscript_cmd, stdout=DEVNULL, stderr=DEVNULL)
+    subprocess.call(tscript_cmd)
 
     # load ctm file
     ctm_path = os.path.splitext(audio_path)[0] + ".ctm"
@@ -50,6 +50,8 @@ if __name__ == "__main__":
     # test audio path
     test_audio = "/tmp/20170728_pmoney_pmpod785.mp3"
 
-    result = transcribe(test_audio)
+    result = transcribe(test_audio, method="kaldi")
+    #result = transcribe(test_audio, method="dspeech")
+
     print(result[0])
 

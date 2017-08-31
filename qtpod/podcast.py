@@ -6,6 +6,7 @@ import multiprocessing
 import os
 import re
 import subprocess
+import sys
 import tempfile
 import xml.etree.ElementTree as ET
 
@@ -89,7 +90,7 @@ class Episode(object):
 
         # transcribe and punctuate audio
         (tscript, tstamps) = transcribe(self._audio_path)
-        self._tscript = punctuate(tscript, tstamps, method="tstamp")
+        self._tscript = punctuate(tscript, tstamps)
 
     # add getters for podcast elements
     guid = property(lambda self: self._guid)
@@ -170,7 +171,7 @@ class Podcast(object):
     episodes = property(lambda self: tuple(self._episodes))
 
 
-def make_train_data(feed_url, n_ep=5):
+def make_train_data(feed_url, n_ep=1):
 
     # load podcast
     podcast = Podcast(feed_url)
@@ -189,25 +190,29 @@ if __name__ == "__main__":
 
     # test feed URLs
     test_urls = [
-        "http://feed.thisamericanlife.org/talpodcast?format=xml",
-        "http://www.howstuffworks.com/podcasts/stuff-you-should-know.rss",
-        "https://www.npr.org/rss/podcast.php?id=510298",
-        "https://www.npr.org/rss/podcast.php?id=510307",
-        "http://feeds.feedburner.com/freakonomicsradio?format=xml",
-        "https://www.npr.org/rss/podcast.php?id=510318",
+        #"http://feed.thisamericanlife.org/talpodcast?format=xml",
+        #"http://www.howstuffworks.com/podcasts/stuff-you-should-know.rss",
+        #"https://www.npr.org/rss/podcast.php?id=510298",
+        #"https://www.npr.org/rss/podcast.php?id=510307",
+        #"http://feeds.feedburner.com/freakonomicsradio?format=xml",
+        #"https://www.npr.org/rss/podcast.php?id=510318",
         "https://www.npr.org/rss/podcast.php?id=510289",
-        "http://feeds.wnyc.org/radiolab?format=xml",
-        "https://www.npr.org/rss/podcast.php?id=381444908",
-        "http://feeds.podtrac.com/zKq6WZZLTlbM",
-        "https://www.npr.org/rss/podcast.php?id=344098539",
-        "http://joeroganexp.joerogan.libsynpro.com/rss",
-        "https://www.npr.org/rss/podcast.php?id=510310",
-        "https://www.npr.org/rss/podcast.php?id=510308",
-        "http://feeds.feedburner.com/pod-save-america?format=xml",
-        "http://feeds.99percentinvisible.org/99percentinvisible?format=xml",
-        "https://www.npr.org/rss/podcast.php?id=510313",
-        "http://feeds.stownpodcast.org/stownpodcast?format=xml",
-        "http://feeds.themoth.org/themothpodcast?format=xml",
-        "http://thewayiheardit.rsvmedia.com/rss",
+        #"http://feeds.wnyc.org/radiolab?format=xml",
+        #"https://www.npr.org/rss/podcast.php?id=381444908",
+        #"http://feeds.podtrac.com/zKq6WZZLTlbM",
+        #"https://www.npr.org/rss/podcast.php?id=344098539",
+        #"http://joeroganexp.joerogan.libsynpro.com/rss",
+        #"https://www.npr.org/rss/podcast.php?id=510310",
+        #"https://www.npr.org/rss/podcast.php?id=510308",
+        #"http://feeds.feedburner.com/pod-save-america?format=xml",
+        #"http://feeds.99percentinvisible.org/99percentinvisible?format=xml",
+        #"https://www.npr.org/rss/podcast.php?id=510313",
+        #"http://feeds.stownpodcast.org/stownpodcast?format=xml",
+        #"http://feeds.themoth.org/themothpodcast?format=xml",
+        #"http://thewayiheardit.rsvmedia.com/rss",
     ]
+
+    #pool = multiprocessing.Pool(4)
+    #pool.map(make_train_data, test_urls)
+    make_train_data(test_urls[0])
 
