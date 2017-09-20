@@ -46,7 +46,7 @@ def punctuate(tscript, tstamps, method="unified"):
         for (n, text) in enumerate(splits):
             splits[n] = _punctuator_api(text)
 
-        return " ".join(splits)
+        return "\n".join(splits)
 
     else:
         raise ValueError("unknown puncutate method")
